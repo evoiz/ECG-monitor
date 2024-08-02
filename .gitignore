@@ -1,2 +1,5 @@
 NodeJsServer/node_modules/
 Input/
+GUI/GUI_pyQT.spec
+GUI/build/
+GUI/dist/
