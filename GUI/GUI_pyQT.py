@@ -48,7 +48,7 @@ class ECGApp(QMainWindow):
         self.lowcut = 0.5
         self.highcut = 50
         self.init_ui()
-        self.model = load_model("./GUI/model.keras")
+        self.model = load_model("./model.keras")
 
     def init_ui(self):
         central_widget = QWidget()
@@ -107,7 +107,7 @@ class ECGApp(QMainWindow):
         self.open_button.clicked.connect(self.open_offline)
         self.offline_layout.addWidget(self.open_button)
         
-        self.slider_label = QLabel("Number of lines: 500")
+        self.slider_label = QLabel("Number of samples: 500")
         self.offline_layout.addWidget(self.slider_label)
         
         self.lines_slider = QSlider(Qt.Orientation.Horizontal)
@@ -120,7 +120,7 @@ class ECGApp(QMainWindow):
         layout.addWidget(self.result_groupbox)
         self.result_layout = QVBoxLayout(self.result_groupbox)
         
-        self.result_label = QLabel("Result: Normal")
+        self.result_label = QLabel("Result: ")
         self.result_layout.addWidget(self.result_label)
 
         self.analyze_button = QPushButton("Analyze")
