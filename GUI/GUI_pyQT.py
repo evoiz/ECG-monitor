@@ -44,7 +44,7 @@ class ECGApp(QMainWindow):
         self.current_data = None
         self.processed_data = None
         self.error_400_shown = False
-        self.fs = 500
+        self.fs = 125
         self.lowcut = 0.5
         self.highcut = 50
         self.init_ui()
@@ -120,6 +120,9 @@ class ECGApp(QMainWindow):
         layout.addWidget(self.result_groupbox)
         self.result_layout = QVBoxLayout(self.result_groupbox)
         
+        self.heart_rate_label = QLabel("Heart Rate: -- bpm")
+        self.result_layout.addWidget(self.heart_rate_label)
+
         self.result_label = QLabel("Result: ")
         self.result_layout.addWidget(self.result_label)
 
@@ -264,6 +267,10 @@ class ECGApp(QMainWindow):
                 QMessageBox.warning(self, "Analysis Error", "Not enough peaks detected for analysis.")
                 return
             
+            avg_samples_between_peaks = np.mean(np.diff(peaks))
+            heart_rate = (self.fs * 60) / avg_samples_between_peaks
+            self.heart_rate_label.setText(f"Heart Rate: {heart_rate:.0f} bpm")
+
             samples_between_peaks = normalized_ecg[peaks[0]:peaks[1]]
             if len(samples_between_peaks) < 187:
                 padded_samples = np.pad(samples_between_peaks, (0, 187 - len(samples_between_peaks)), 'constant')
@@ -282,6 +289,10 @@ class ECGApp(QMainWindow):
         if len(peaks) < 2:
             self.result_label.setText("Result: Not enough peaks for analysis")
             return
+        
+        avg_samples_between_peaks = np.mean(np.diff(peaks))
+        heart_rate = (self.fs * 60) / avg_samples_between_peaks
+        self.heart_rate_label.setText(f"Heart Rate: {heart_rate:.0f} bpm")
         
         samples_between_peaks = normalized_ecg[peaks[0]:peaks[1]]
         if len(samples_between_peaks) < 187:
