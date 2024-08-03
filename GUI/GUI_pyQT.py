@@ -1,4 +1,5 @@
 import sys
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,10 +14,8 @@ from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QColor, QPainter
 from scipy.fft import fft, ifft, fftfreq
 from scipy.signal import find_peaks
-from tensorflow.keras.models import load_model
-import os
-
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+from tensorflow.keras.models import load_model
 
 class StatusIndicator(QWidget):
     def __init__(self, parent=None):
